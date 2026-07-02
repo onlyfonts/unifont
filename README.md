@@ -12,10 +12,12 @@ npm install @onlyfonts/unifont
 
 ## Astro
 
+Astro's Fonts API uses its own provider shape, so import the adapter from `@onlyfonts/unifont/astro`:
+
 ```ts
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import { onlyfonts } from '@onlyfonts/unifont';
+import { onlyfonts } from '@onlyfonts/unifont/astro';
 
 export default defineConfig({
   experimental: {
@@ -26,9 +28,20 @@ export default defineConfig({
 });
 ```
 
+```astro
+---
+// in your layout
+import { Font } from 'astro:fonts';
+---
+<Font cssVariable="--font-inter" preload />
+```
+
 ```css
 body { font-family: var(--font-inter); }
 ```
+
+Fonts that aren't in the onlyfonts catalog (e.g. a licensed font you self-host) can be
+registered alongside via Astro's built-in `local` provider — providers coexist per family.
 
 ## Nuxt
 

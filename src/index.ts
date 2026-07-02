@@ -85,9 +85,9 @@ function compareTuples(a: string, b: string): number {
   return ai === bi ? weightKey(aw) - weightKey(bw) : Number(ai) - Number(bi);
 }
 
-/** Weight can be a number ("400") or a variable range ("100..900") — sort by the low end. */
-function weightKey(w: string): number {
-  return Number(w.split('..')[0]) || 0;
+/** Weight can be a number ("400"), a real number, or a variable range ("100..900") — sort by the low end. */
+function weightKey(w: string | number): number {
+  return Number(String(w).split('..')[0]) || 0;
 }
 
 /** Parse @font-face blocks from css2 output into unifont FontFaceData. */

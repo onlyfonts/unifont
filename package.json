@@ -1,6 +1,6 @@
 {
   "name": "@onlyfonts/unifont",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "unifont provider for onlyfonts — use the privacy-first, EU-hosted onlyfonts font CDN in Astro, Nuxt, and anything built on unifont",
   "keywords": [
     "unifont",
@@ -24,6 +24,10 @@
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./astro": {
+      "import": "./dist/astro.js",
+      "types": "./dist/astro.d.ts"
     }
   },
   "main": "./dist/index.js",
