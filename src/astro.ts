@@ -1,4 +1,5 @@
 import { onlyfonts as onlyfontsUnifont, type OnlyfontsProviderOptions } from './index.js';
+import type { FontFaceData } from 'unifont';
 
 /**
  * Astro Fonts API adapter for the onlyfonts provider.
@@ -29,15 +30,16 @@ import { onlyfonts as onlyfontsUnifont, type OnlyfontsProviderOptions } from './
  */
 export function onlyfonts(options: OnlyfontsProviderOptions = {}): AstroFontProvider {
   const provider = onlyfontsUnifont(options);
-  let initialized: { resolveFont: InitializedResolveFont } | undefined;
+  let initialized: InitializedProvider | undefined;
 
   return {
     name: 'onlyfonts',
     config: options as Record<string, unknown>,
-    async init(context: unknown) {
-      initialized = (await (provider as (ctx: unknown) => unknown)(context)) as typeof initialized;
+    async init(context) {
+      initialized = (await (provider as (ctx: unknown) => unknown)(context)) as InitializedProvider;
     },
-    async resolveFont({ familyName, ...rest }: AstroResolveFontOptions) {
+    async resolveFont(resolveOptions) {
+      const { familyName, ...rest } = resolveOptions ?? {};
       return await initialized?.resolveFont(familyName, rest);
     },
   };
@@ -45,20 +47,23 @@ export function onlyfonts(options: OnlyfontsProviderOptions = {}): AstroFontProv
 
 export default onlyfonts;
 
-type InitializedResolveFont = (
-  family: string,
-  options: Record<string, unknown>,
-) => Promise<{ fonts: unknown[] } | undefined> | ({ fonts: unknown[] } | undefined);
-
-interface AstroResolveFontOptions {
-  familyName: string;
-  [key: string]: unknown;
+interface InitializedProvider {
+  resolveFont(
+    family: string,
+    options: Record<string, unknown>,
+  ): Promise<{ fonts: FontFaceData[] } | undefined> | ({ fonts: FontFaceData[] } | undefined);
 }
 
-/** Minimal shape of an Astro Fonts API provider (mirrors Astro's internal `FontProvider`). */
+/**
+ * Minimal shape of an Astro Fonts API provider (structurally compatible with
+ * Astro's internal `FontProvider`). Parameters are intentionally loose so it
+ * assigns to Astro's `FontProvider<never>` regardless of Astro's version.
+ */
 export interface AstroFontProvider {
   name: string;
   config?: Record<string, unknown>;
-  init(context: unknown): Promise<void>;
-  resolveFont(options: AstroResolveFontOptions): Promise<{ fonts: unknown[] } | undefined>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  init(context: any): void | Promise<void>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  resolveFont(options: any): Promise<{ fonts: FontFaceData[] } | undefined>;
 }
