@@ -1,0 +1,52 @@
+{
+  "name": "@onlyfonts/unifont",
+  "version": "0.1.0",
+  "description": "unifont provider for onlyfonts — use the privacy-first, EU-hosted onlyfonts font CDN in Astro, Nuxt, and anything built on unifont",
+  "keywords": [
+    "unifont",
+    "fonts",
+    "font-provider",
+    "astro",
+    "nuxt",
+    "onlyfonts",
+    "webfonts",
+    "google-fonts-alternative",
+    "gdpr"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://onlyfonts.ai",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/onlyfonts/unifont.git"
+  },
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest",
+    "prepublishOnly": "npm test && npm run build"
+  },
+  "peerDependencies": {
+    "unifont": ">=0.4.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "typescript": "^5.7.0",
+    "unifont": "^0.5.0"
+  }
+}
