@@ -1,6 +1,6 @@
 {
   "name": "@onlyfonts/unifont",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "unifont provider for onlyfonts — use the privacy-first, EU-hosted onlyfonts font CDN in Astro, Nuxt, and anything built on unifont",
   "keywords": [
     "unifont",

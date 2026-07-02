@@ -31,7 +31,7 @@ export default defineConfig({
 ```astro
 ---
 // in your layout
-import { Font } from 'astro:fonts';
+import { Font } from 'astro:assets';
 ---
 <Font cssVariable="--font-inter" preload />
 ```
@@ -40,19 +40,28 @@ import { Font } from 'astro:fonts';
 body { font-family: var(--font-inter); }
 ```
 
+Astro subsets and self-hosts the font at build time, so the browser makes no third-party
+font requests. Reference the CSS variable, not the raw family name. Full guide:
+https://onlyfonts.ai/docs/astro
+
 Fonts that aren't in the onlyfonts catalog (e.g. a licensed font you self-host) can be
 registered alongside via Astro's built-in `local` provider — providers coexist per family.
 
 ## Nuxt
 
+onlyfonts is a unifont provider, so it plugs into [@nuxt/fonts](https://fonts.nuxt.com).
+Register it with the `fonts:providers` hook:
+
 ```ts
 // nuxt.config.ts
-import { onlyfonts } from '@onlyfonts/unifont';
-
 export default defineNuxtConfig({
   modules: ['@nuxt/fonts'],
+  hooks: {
+    async 'fonts:providers'(providers) {
+      providers.onlyfonts = (await import('@onlyfonts/unifont')).default;
+    },
+  },
   fonts: {
-    providers: { onlyfonts },
     families: [{ name: 'Inter', provider: 'onlyfonts' }],
   },
 });
