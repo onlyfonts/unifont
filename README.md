@@ -1,5 +1,7 @@
 # @onlyfonts/unifont
 
+[![Subscribers](https://onlyfonts.tinysend.com/subscribers.svg)](https://onlyfonts.tinysend.com)
+
 [unifont](https://github.com/unjs/unifont) provider for [onlyfonts](https://onlyfonts.ai) — serve open-source fonts from onlyfonts' privacy-first, EU-hosted, Google-Fonts-compatible CDN in Astro, Nuxt, and anything built on unifont. No visitor tracking, no requests to Google.
 
 ## Install
